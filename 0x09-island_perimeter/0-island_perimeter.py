@@ -1,16 +1,36 @@
 #!/usr/bin/python3
 """
-Island Perimeter
+    Module implementing island perimeter problem.
+
 """
 
+
 def island_perimeter(grid):
-    """
-     returns the perimeter of the island described in grid
-    :param grid:
-    :return:
-    """
-    area = 0
-    for row in grid + list(map(list, zip(*grid))):
-        for i1, i2 in zip([0] + row, row + [0]):
-            area += int(i1 != i2)
-    return area
+    """Computes the perimeter of an island"""
+    if not grid or not grid[0]:
+        return 0
+
+    rows = len(grid)
+    cols = len(grid[0])
+    perimeter = 0
+
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == 1:   # land cell found
+                # check the top side
+                if r == 0 or grid[r - 1][c] == 0:
+                    perimeter += 1
+
+                # check the bottom side
+                if r == rows - 1 or grid[r + 1][c] == 0:
+                    perimeter += 1
+
+                # check the left side
+                if c == 0 or grid[r][c - 1] == 0:
+                    perimeter += 1
+
+                # check the right side
+                if c == cols - 1 or grid[r][c + 1] == 0:
+                    perimeter += 1
+
+    return perimeter
